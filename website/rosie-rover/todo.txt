@@ -1,0 +1,10 @@
+error message if the password is incorrect
+make it look pretty
+colors
+video streams
+gps location
+make the warning buttons send stuff to the phone
+security (currently you could just go to the control the rover page, skipping the password)
+make it work with that Facebook thingy
+scale for mobile apps
+make users
