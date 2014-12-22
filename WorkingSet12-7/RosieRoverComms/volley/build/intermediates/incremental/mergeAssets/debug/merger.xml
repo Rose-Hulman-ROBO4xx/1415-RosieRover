@@ -2,10 +2,10 @@
 <merger version="2" >
 
     <dataSet config="main" >
-        <source path="C:\Users\naylorbl.000\AndroidstudioProjects\RosieRoverComms\volley\assets" />
+        <source path="C:\Users\naylorbl.000\Documents\GitHub\1415-RosieRover\WorkingSet12-7\RosieRoverComms\volley\assets" />
     </dataSet>
     <dataSet config="debug" >
-        <source path="C:\Users\naylorbl.000\AndroidstudioProjects\RosieRoverComms\volley\src\debug\assets" />
+        <source path="C:\Users\naylorbl.000\Documents\GitHub\1415-RosieRover\WorkingSet12-7\RosieRoverComms\volley\src\debug\assets" />
     </dataSet>
 
 </merger>

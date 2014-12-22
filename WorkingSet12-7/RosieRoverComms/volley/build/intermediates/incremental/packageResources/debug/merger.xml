@@ -2,12 +2,12 @@
 <merger version="2" >
 
     <dataSet config="main" >
-        <source path="C:\Users\naylorbl.000\AndroidstudioProjects\RosieRoverComms\volley\res" />
-        <source path="C:\Users\naylorbl.000\AndroidstudioProjects\RosieRoverComms\volley\build\generated\res\rs\debug" />
-        <source path="C:\Users\naylorbl.000\AndroidstudioProjects\RosieRoverComms\volley\build\generated\res\generated\debug" />
+        <source path="C:\Users\naylorbl.000\Documents\GitHub\1415-RosieRover\WorkingSet12-7\RosieRoverComms\volley\res" />
+        <source path="C:\Users\naylorbl.000\Documents\GitHub\1415-RosieRover\WorkingSet12-7\RosieRoverComms\volley\build\generated\res\rs\debug" />
+        <source path="C:\Users\naylorbl.000\Documents\GitHub\1415-RosieRover\WorkingSet12-7\RosieRoverComms\volley\build\generated\res\generated\debug" />
     </dataSet>
     <dataSet config="debug" >
-        <source path="C:\Users\naylorbl.000\AndroidstudioProjects\RosieRoverComms\volley\src\debug\res" />
+        <source path="C:\Users\naylorbl.000\Documents\GitHub\1415-RosieRover\WorkingSet12-7\RosieRoverComms\volley\src\debug\res" />
     </dataSet>
 
 </merger>

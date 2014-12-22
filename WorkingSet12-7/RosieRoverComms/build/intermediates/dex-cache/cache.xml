@@ -2,11 +2,35 @@
 <pre-dex-items>
 
     <item
-        dex="C:\Users\naylorbl.000\AndroidstudioProjects\RosieRoverComms\app\build\intermediates\pre-dexed\debug\support-annotations-20.0.0-5c3aba7025ecce2a1dcb455c9dfbc389e03e8fb5.jar"
-        jar="C:\Users\naylorbl.000\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\20.0.0\support-annotations-20.0.0.jar"
+        dex="C:\Users\naylorbl.000\AndroidstudioProjects\RosieRoverComms\app\build\intermediates\pre-dexed\debug\internal_impl-20.0.0-5e85767ef650a2840363403ef9e651b03d638f4f.jar"
+        jar="C:\Users\naylorbl.000\AndroidstudioProjects\RosieRoverComms\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\libs\internal_impl-20.0.0.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="9d9013e9ff35fc3756411e62873c363c70c638fa"/>
+        sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
+    <item
+        dex="C:\Users\naylorbl.000\Documents\GitHub\1415-RosieRover\WorkingSet12-7\RosieRoverComms\app\build\intermediates\pre-dexed\debug\classes-ae87ed68a0d0e84dbc62afd5294b350fe88e6e32.jar"
+        jar="C:\Users\naylorbl.000\Documents\GitHub\1415-RosieRover\WorkingSet12-7\RosieRoverComms\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.1.11\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="0f700f6802ba1a1f1fa7ac26d5db0666a89d75a6"/>
+    <item
+        dex="C:\Users\naylorbl.000\Documents\GitHub\1415-RosieRover\WorkingSet12-7\RosieRoverComms\app\build\intermediates\pre-dexed\debug\classes-f43a0117db071cce79b5f3819611b878d6803b7c.jar"
+        jar="C:\Users\naylorbl.000\Documents\GitHub\1415-RosieRover\WorkingSet12-7\RosieRoverComms\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
+    <item
+        dex="C:\Users\naylorbl.000\Documents\GitHub\1415-RosieRover\WorkingSet12-7\RosieRoverComms\app\build\intermediates\pre-dexed\debug\internal_impl-20.0.0-a0fb8b2db9b7a15ff3505ad33a0ff60d3b02cd32.jar"
+        jar="C:\Users\naylorbl.000\Documents\GitHub\1415-RosieRover\WorkingSet12-7\RosieRoverComms\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\libs\internal_impl-20.0.0.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
+    <item
+        dex="C:\Users\naylorbl.000\AndroidstudioProjects\RosieRoverComms\app\build\intermediates\pre-dexed\debug\library-1.0.6-e0dea46242911c80c59d16921ddfd57b179afc29.jar"
+        jar="C:\Users\naylorbl.000\.gradle\caches\modules-2\files-2.1\com.mcxiaoke.volley\library\1.0.6\b2e6988baeea1aed656995f973aaa2fc3feaf447\library-1.0.6.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="b2e6988baeea1aed656995f973aaa2fc3feaf447"/>
     <item
         dex="C:\Users\naylorbl.000\AndroidstudioProjects\RosieRoverComms\app\build\intermediates\pre-dexed\debug\classes-4f88e943c286101efb9357de7617738ea06a201c.jar"
         jar="C:\Users\naylorbl.000\AndroidstudioProjects\RosieRoverComms\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\classes.jar"
@@ -14,22 +38,16 @@
         revision="20.0.0"
         sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
     <item
-        dex="C:\Users\naylorbl.000\AndroidstudioProjects\RosieRoverComms\app\build\intermediates\pre-dexed\debug\internal_impl-20.0.0-5e85767ef650a2840363403ef9e651b03d638f4f.jar"
-        jar="C:\Users\naylorbl.000\AndroidstudioProjects\RosieRoverComms\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\libs\internal_impl-20.0.0.jar"
+        dex="C:\Users\naylorbl.000\AndroidstudioProjects\RosieRoverComms\app\build\intermediates\pre-dexed\debug\support-annotations-20.0.0-5c3aba7025ecce2a1dcb455c9dfbc389e03e8fb5.jar"
+        jar="C:\Users\naylorbl.000\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\20.0.0\support-annotations-20.0.0.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
+        sha1="9d9013e9ff35fc3756411e62873c363c70c638fa"/>
     <item
         dex="C:\Users\naylorbl.000\AndroidstudioProjects\RosieRoverComms\app\build\intermediates\pre-dexed\debug\classes-ccaa5a20b085955e09b4a10c25a2d611aaf3aed6.jar"
         jar="C:\Users\naylorbl.000\AndroidstudioProjects\RosieRoverComms\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.1.11\classes.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="0f700f6802ba1a1f1fa7ac26d5db0666a89d75a6"/>
-    <item
-        dex="C:\Users\naylorbl.000\AndroidstudioProjects\RosieRoverComms\app\build\intermediates\pre-dexed\debug\library-1.0.6-e0dea46242911c80c59d16921ddfd57b179afc29.jar"
-        jar="C:\Users\naylorbl.000\.gradle\caches\modules-2\files-2.1\com.mcxiaoke.volley\library\1.0.6\b2e6988baeea1aed656995f973aaa2fc3feaf447\library-1.0.6.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="b2e6988baeea1aed656995f973aaa2fc3feaf447"/>
 
 </pre-dex-items>

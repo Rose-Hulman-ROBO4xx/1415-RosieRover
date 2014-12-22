@@ -18,6 +18,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +27,19 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -36,6 +49,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Created by naylorbl on 10/26/2014.
  */
 public final class SerialPassingService extends Service {
+    static String urlString = "http://www.rosierover.com/coms/";
     static BluetoothAdapter mBluetoothAdapter;
     static BluetoothManager bluetoothManager;
     static boolean mScanning;
@@ -73,11 +87,21 @@ public final class SerialPassingService extends Service {
 
     static final String TAG = "GCM Demo";
 
+    private final static int SERVER_PORT = 8006;
+    public final static int RECEIVING_TIMEOUT_SERVER = 3000;
+    static DatagramSocket socket;
+    DatagramPacket packetOut;
+    DatagramPacket packetIn;
+    byte[] DataIn;
+    byte[] DataOut;
+
     TextView mDisplay;
     GoogleCloudMessaging gcm;
     AtomicInteger msgId = new AtomicInteger();
     Context context;
     String regid;
+    static String IP_ADR = "64.233.183.141";
+    static ClientComms comms;
 
 
 
@@ -96,8 +120,30 @@ public final class SerialPassingService extends Service {
     @Override
     public void onCreate() {
 
-
+        comms=new ClientComms();
+        try {
+            comms.setup();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        comms.sendMsg();
+        comms.setReceiver();
     }
+
+
+
+    static public void sendToServer(String messageToSend) {
+        try {
+            String messageStr = messageToSend;
+
+            comms.sendMsg();
+        } catch (Exception e) {
+            Log.d("UDP",e.toString());
+        }
+    }
+
+
+
 
     public void initialize(){
         Log.i("DEBUG","initializing SerialPassingService");
@@ -129,13 +175,7 @@ public final class SerialPassingService extends Service {
             @Override
             public void uiDeviceFound(final BluetoothDevice device, final int rssi, final byte[] record){
                 String msg = "uiDeviceFound: "+device.getName()+", " +rssi;//+", "+rssi.toString();
-                //Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
-                //Log.d("DEBUG", "uiDeviceFound: " + msg);
-                //if(devices.contains(device)==false){
-                  //  devices.add(device);
-
-                    Log.d("DEBUG", "uiDeviceFound: " + msg); //lists found things in logcat
-                //}
+                Log.d("DEBUG", "uiDeviceFound: " + msg); //lists found things in logcat
 
                 //if find Bluno, connect, stop searching for more devices
                 if(device.getName().equals("Bluno")==true){
@@ -144,14 +184,6 @@ public final class SerialPassingService extends Service {
                         Log.d("DEBUG", "CONNECTION SUCCESSFUL");
                         mBleWrapper.stopScanning();
 
-/*
-                        BluetoothGattCharacteristic c;
-                        BluetoothGatt gatt = mBleWrapper.getGatt();
-                        c=mBleWrapper.getGatt().getService(blunoServ).getCharacteristic(SerialPortUUID);
-                        mBleWrapper.writeDataToCharacteristic(c,new byte[]{0x01});
-                        c=mBleWrapper.getGatt().getService(blunoServ).getCharacteristic(CommandUUID);
-                        mBleWrapper.writeDataToCharacteristic(c,new byte[]{0x01});
-*/
                     }else{
                         Log.d("DEBUG", "CONNECTION FAILED");
                     }
@@ -189,17 +221,7 @@ public final class SerialPassingService extends Service {
                     Log.d("LOGTAG","Val: "+b);
                 }
             }
-            /*
-        @Override
-        public void uiSuccessfulWrite(BluetoothGatt gatt, BluetoothDevice device, BluetoothGattService service, BluetoothGattCharacteristic ch, String description){
-            BluetoothGattCharacteristic c;
-            super.uiSuccessfulWrite(gatt,device,service,ch,description);
 
-            c=gatt.getService()
-
-
-        }
-        */
         });//end of BleWrapper class
 
         //do we even have BT hardware?
@@ -371,14 +393,7 @@ public final class SerialPassingService extends Service {
     }
 
     public static void onResume(){
-       /* if(mBleWrapper.isBtEnabled()==false){
-            Intent enableBtIntent=new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivity(enableBtIntent);
-            //finish();
-        }
 
-        mBleWrapper.initialize();
-        */
     }
 
 
@@ -392,10 +407,10 @@ public final class SerialPassingService extends Service {
     public static void serialSend(String command){
         //mSCharacteristic.setValue(command);
 		//mBluetoothLeService.writeCharacteristic(mSCharacteristic);
-try {
-    mBleWrapper.writeDataToCharacteristic(mSerialPortCharacteristic, command.getBytes());
-    }catch(NullPointerException e){
-    //the code can go fck itself.
+        try {
+            mBleWrapper.writeDataToCharacteristic(mSerialPortCharacteristic, command.getBytes());
+        }catch(NullPointerException e){
+
         };
         //mBleWrapper.writeDataToCharacteristic(mCommandCharacteristic,command.getBytes());
         //mBleWrapper.writeDataToCharacteristic(mModelNumberCharacteristic,command.getBytes());
@@ -454,6 +469,10 @@ try {
             //mBleWrapper.writeDataToCharacteristic(mCommandCharacteristic, new byte[]{0x01});
         }
     }
+
+
+
 }
+
 
 

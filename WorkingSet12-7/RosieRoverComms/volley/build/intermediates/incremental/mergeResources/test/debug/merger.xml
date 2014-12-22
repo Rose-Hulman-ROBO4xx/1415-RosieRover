@@ -2,18 +2,18 @@
 <merger version="2" >
 
     <dataSet config="debug" >
-        <source path="C:\Users\naylorbl.000\AndroidstudioProjects\RosieRoverComms\volley\build\intermediates\bundles\debug\res" />
+        <source path="C:\Users\naylorbl.000\Documents\GitHub\1415-RosieRover\WorkingSet12-7\RosieRoverComms\volley\build\intermediates\bundles\debug\res" />
     </dataSet>
     <dataSet config="main" >
-        <source path="C:\Users\naylorbl.000\AndroidstudioProjects\RosieRoverComms\volley\tests\res" >
+        <source path="C:\Users\naylorbl.000\Documents\GitHub\1415-RosieRover\WorkingSet12-7\RosieRoverComms\volley\tests\res" >
             <file
                 name="large_jpeg_1024_500"
-                path="C:\Users\naylorbl.000\AndroidstudioProjects\RosieRoverComms\volley\tests\res\raw\large_jpeg_1024_500.jpg"
+                path="C:\Users\naylorbl.000\Documents\GitHub\1415-RosieRover\WorkingSet12-7\RosieRoverComms\volley\tests\res\raw\large_jpeg_1024_500.jpg"
                 qualifiers=""
                 type="raw" />
         </source>
-        <source path="C:\Users\naylorbl.000\AndroidstudioProjects\RosieRoverComms\volley\build\generated\res\rs\test\debug" />
-        <source path="C:\Users\naylorbl.000\AndroidstudioProjects\RosieRoverComms\volley\build\generated\res\generated\test\debug" />
+        <source path="C:\Users\naylorbl.000\Documents\GitHub\1415-RosieRover\WorkingSet12-7\RosieRoverComms\volley\build\generated\res\rs\test\debug" />
+        <source path="C:\Users\naylorbl.000\Documents\GitHub\1415-RosieRover\WorkingSet12-7\RosieRoverComms\volley\build\generated\res\generated\test\debug" />
     </dataSet>
 
 </merger>
