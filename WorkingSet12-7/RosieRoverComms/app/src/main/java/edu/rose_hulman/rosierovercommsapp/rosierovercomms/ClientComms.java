@@ -4,6 +4,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,14 +25,17 @@ public class ClientComms {
 
     URL url;// = new URL("http://gcm-attempt-01.appspot.com/");
     URLConnection conn;// = url.openConnection();
+    public String urlString="http://rosierover.com/coms";
+    //public String urlString="http://gcm-attempt-01.appspot.com/";
 
     public void setup() throws IOException {
-         url = new URL("http://gcm-attempt-01.appspot.com/");
+         url = new URL(urlString);
         conn= url.openConnection();
         conn.setDoOutput(true);
         //conn.setDoInput(true);
     }
 
+    /*
     public void setReceiver(){
         backgroundReceiver=new Thread(new Runnable() {
             StringBuilder sb = new StringBuilder();
@@ -76,11 +80,11 @@ public class ClientComms {
         );
         backgroundReceiver.start();
     }
-
+*/
     /*
     establish connection to server and send message
      */
-    public void sendMsg() {
+    public void sendMsg(final String msgToSend[]) {
 
         //Toast.makeText(SerialPassingService.theService, msg, Toast.LENGTH_SHORT).show();
 
@@ -91,67 +95,67 @@ public class ClientComms {
             public void run() {
 
 
-                String name = "nameMessage";
-                String email = "emailMessage";
-                String Login = "login message";
-                String Pass = "pass message";
+                String roboBat = msgToSend[0];
+                String phoneBat = msgToSend[1];
+                String gpsX = msgToSend[2];
+                String gpsY = msgToSend[3];
 
                 String data = null;
                 try {
-                    data = URLEncoder.encode("name", "UTF-8")
-                            + "=" + URLEncoder.encode(name, "UTF-8");
+                    data = URLEncoder.encode("robotBatteryLife", "UTF-8")
+                            + "=" + URLEncoder.encode(roboBat, "UTF-8");
 
-                    data += "&" + URLEncoder.encode("email", "UTF-8")
-                            + "=" + URLEncoder.encode(email, "UTF-8");
+                    data += "&" + URLEncoder.encode("phoneBatteryLife", "UTF-8")
+                            + "=" + URLEncoder.encode(phoneBat, "UTF-8");
 
-                    data += "&" + URLEncoder.encode("user", "UTF-8")
-                            + "=" + URLEncoder.encode(Login, "UTF-8");
+                    data += "&" + URLEncoder.encode("GPSx", "UTF-8")
+                            + "=" + URLEncoder.encode(gpsX, "UTF-8");
 
-                    data += "&" + URLEncoder.encode("pass", "UTF-8")
-                            + "=" + URLEncoder.encode(Pass, "UTF-8");
+                    data += "&" + URLEncoder.encode("GPSy", "UTF-8")
+                            + "=" + URLEncoder.encode(gpsY, "UTF-8");
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-                //String text = "";
-                //BufferedReader reader = null;
+                String text = "";
+                BufferedReader reader = null;
 
                 // Send data
                 try {
 
                     // Defined URL  where to send data
-                    //URL url = new URL(urlString);
-                    url = new URL("http://gcm-attempt-01.appspot.com/");
+                     url = new URL(urlString);
                     // Send POST data request
-
                     conn = url.openConnection();
                     conn.setDoOutput(true);
-                    //conn.setDoInput(true);
+                    conn.setDoInput(true);
                     OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
                     wr.write(data);
                     wr.flush();
-
                     // Get the server response
+                    reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
-                        reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
-                    /*
                     StringBuilder sb = new StringBuilder();
                     String line = null;
-
+                    //Log.i("web test", "prep read");
                     // Read Server Response
                     while ((line = reader.readLine()) != null) {
+                        Log.i("web test", "read not null");
                         // Append server response in string
                         sb.append(line + "\n");
                     }
 
+                    JSONObject obj = new JSONObject(sb.toString());
+                    text="" + obj.getInt("emergency") + "," + obj.getInt("warning") + "," + obj.getInt("fire") + "," + obj.getInt("leftMotor") + "," + obj.getInt("rightMotor");
 
-                    text = sb.toString();
-                    */
+
+                    //text = sb.toString();
+
 
                 } catch (Exception ex) {
                     Log.i("web crap", ex.toString());
                 }
-                    /*
+
                  finally {
                     try {
 
@@ -160,12 +164,12 @@ public class ClientComms {
                         Log.i("web crap", ex.toString());
                     }
                 }
-                */
+
 
                 // Show response on activity
                 //content.setText( text  );
 
-                //Log.i("web", text);
+                Log.i("web", text);
             }});
 
         backgroundSend.start();

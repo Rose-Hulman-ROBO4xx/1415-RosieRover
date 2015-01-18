@@ -103,6 +103,9 @@ public final class SerialPassingService extends Service {
     static String IP_ADR = "64.233.183.141";
     static ClientComms comms;
 
+    public static GPSTracker gps;
+    public static String[] msgToSend = new String[4];
+
 
 
 
@@ -112,6 +115,7 @@ public final class SerialPassingService extends Service {
         theService=this; //declares a static instance of this class. Used as a substitute for not
         //being able to make an entire class static. Easier for MainActivity to reference it.
         Log.i("DEBUG","starting SerialPassingService");
+        gps=new GPSTracker(this);
 
 
         return Service.START_STICKY; //service will continue to run if application is closed. Very important
@@ -126,8 +130,12 @@ public final class SerialPassingService extends Service {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        comms.sendMsg();
-        comms.setReceiver();
+        msgToSend[0]="test1";
+        msgToSend[1]="test2";
+        msgToSend[2]="test3";
+        msgToSend[3]="test4";
+        comms.sendMsg(msgToSend);
+        //comms.setReceiver();
     }
 
 
@@ -135,8 +143,11 @@ public final class SerialPassingService extends Service {
     static public void sendToServer(String messageToSend) {
         try {
             String messageStr = messageToSend;
-
-            comms.sendMsg();
+            msgToSend[0]="test1";
+            msgToSend[1]="test2";
+            msgToSend[2]="test3";
+            msgToSend[3]="test4";
+            comms.sendMsg(msgToSend);
         } catch (Exception e) {
             Log.d("UDP",e.toString());
         }

@@ -60,6 +60,8 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
 
                 SerialPassingService.sendToServer("test message");
+                SerialPassingService.gps.getLocation();
+                Log.d("GPS", "" + SerialPassingService.gps.getLatitude());
 
             }
         });
