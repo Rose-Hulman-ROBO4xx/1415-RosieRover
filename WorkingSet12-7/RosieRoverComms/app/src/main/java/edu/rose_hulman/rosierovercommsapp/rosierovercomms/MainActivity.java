@@ -7,24 +7,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
-
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
+import android.widget.ImageView;
 
 /**
  * Activity for scanning and displaying available Bluetooth LE devices.
  */
 public class MainActivity extends Activity {
 
-    private Button buttonScan;
-    private Button buttonConnect;
-    private ListView btListView;
+    private Button buttonBtConnect;
+    private Button buttonServerConnect;
+    private Button buttonServerDisconnect;
+    private Button buttonBtDisconnect;
+    private Button buttonClose;
+
+    private ImageView roverConnectivity;
+    private ImageView serverConnectivity;
 
     private BleWrapper mBleWrapper = null;
     private WifiManager mWifi;
@@ -34,7 +33,10 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d("WTF", "running right code");
+        //Log.d("WTF", "running right code");
+
+        roverConnectivity=(ImageView)findViewById(R.id.roverConnectionImage);
+        serverConnectivity=(ImageView)findViewById(R.id.serverConnectionImage);
 
         //open SerialPassingService
         Context context = getApplicationContext();
@@ -44,24 +46,59 @@ public class MainActivity extends Activity {
         startService(serialPassingServiceIntent);
         SerialPassingService.setMain(this);
 
-        buttonScan = (Button) findViewById(R.id.button_scan); // initial
-        buttonScan.setOnClickListener(new View.OnClickListener() {
+        buttonBtConnect = (Button) findViewById(R.id.button_connectRover); // initial
+        buttonBtConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 SerialPassingService.theService.initialize();
                SerialPassingService.mBleWrapper.startScanning();
+                roverConnectivity.setImageResource(R.drawable.checkmark_image);
             }
         });
 
-        buttonConnect=(Button) findViewById(R.id.button_connectToTarget);
-        buttonConnect.setOnClickListener(new View.OnClickListener() {
+        buttonServerConnect=(Button) findViewById(R.id.button_connectServer);
+        buttonServerConnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SerialPassingService.openServerComms=true;
+                SerialPassingService.sendToServer();
+                serverConnectivity.setImageResource(R.drawable.checkmark_image);
+                //SerialPassingService.gps.getLocation();
+                //Log.d("GPS", "" + SerialPassingService.gps.getLatitude());
+
+            }
+        });
+
+        buttonServerDisconnect=(Button) findViewById(R.id.button_disconnectServer);
+        buttonServerDisconnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SerialPassingService.openServerComms=false;
+                serverConnectivity.setImageResource(R.drawable.xmark_image);
+
+            }
+        });
+
+        buttonBtDisconnect=(Button) findViewById(R.id.button_disconnectRover);
+        buttonBtDisconnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                SerialPassingService.sendToServer("test message");
-                SerialPassingService.gps.getLocation();
-                Log.d("GPS", "" + SerialPassingService.gps.getLatitude());
+                SerialPassingService.mBleWrapper.stopScanning();
+                roverConnectivity.setImageResource(R.drawable.xmark_image);
+                //
+
+            }
+        });
+
+        buttonClose=(Button) findViewById(R.id.button_close);
+        buttonClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SerialPassingService.openServerComms=false;
+                SerialPassingService.mBleWrapper.stopScanning();
+                SerialPassingService.theService.stopSelf();
 
             }
         });

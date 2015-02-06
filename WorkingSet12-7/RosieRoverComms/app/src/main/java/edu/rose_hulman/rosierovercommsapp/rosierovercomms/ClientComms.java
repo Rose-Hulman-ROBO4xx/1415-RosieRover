@@ -22,6 +22,8 @@ public class ClientComms {
     public static Thread backgroundSend;
     public static Thread backgroundReceiver;
     BufferedReader reader = null;
+    String text;
+    public static int[] commands = new int[5];
 
     URL url;// = new URL("http://gcm-attempt-01.appspot.com/");
     URLConnection conn;// = url.openConnection();
@@ -29,7 +31,7 @@ public class ClientComms {
     //public String urlString="http://gcm-attempt-01.appspot.com/";
 
     public void setup() throws IOException {
-         url = new URL(urlString);
+        url = new URL(urlString);
         conn= url.openConnection();
         conn.setDoOutput(true);
         //conn.setDoInput(true);
@@ -84,97 +86,144 @@ public class ClientComms {
     /*
     establish connection to server and send message
      */
-    public void sendMsg(final String msgToSend[]) {
+    public int[] sendMsg( final double msgToSend[]) {
 
         //Toast.makeText(SerialPassingService.theService, msg, Toast.LENGTH_SHORT).show();
 
 
         // Create Inner Thread Class
         backgroundSend = new Thread(new Runnable() {
-            @Override
-            public void run() {
+        @Override
+         public void run() {
 
 
-                String roboBat = msgToSend[0];
-                String phoneBat = msgToSend[1];
-                String gpsX = msgToSend[2];
-                String gpsY = msgToSend[3];
+//            String roboBat = msgToSend[0];
+//            String phoneBat = msgToSend[1];
+//            String gpsX = msgToSend[2];
+//            String gpsY = msgToSend[3];
 
-                String data = null;
-                try {
-                    data = URLEncoder.encode("robotBatteryLife", "UTF-8")
-                            + "=" + URLEncoder.encode(roboBat, "UTF-8");
+            double roboBat = msgToSend[0];
+            double phoneBat = msgToSend[1];
+            double gpsX = msgToSend[2];
+            double gpsY = msgToSend[3];
+            String data = null;
+            try {
 
-                    data += "&" + URLEncoder.encode("phoneBatteryLife", "UTF-8")
-                            + "=" + URLEncoder.encode(phoneBat, "UTF-8");
+//                data = URLEncoder.encode("robotBatteryLife", "UTF-8")
+//                        + "=" + URLEncoder.encode(roboBat, "UTF-8");
+//
+//                data += "&" + URLEncoder.encode("phoneBatteryLife", "UTF-8")
+//                        + "=" + URLEncoder.encode(phoneBat, "UTF-8");
+//
+//                data += "&" + URLEncoder.encode("GPSx", "UTF-8")
+//                        + "=" + URLEncoder.encode(gpsX, "UTF-8");
+//
+//                data += "&" + URLEncoder.encode("GPSy", "UTF-8")
+//                        + "=" + URLEncoder.encode(gpsY, "UTF-8");
 
-                    data += "&" + URLEncoder.encode("GPSx", "UTF-8")
-                            + "=" + URLEncoder.encode(gpsX, "UTF-8");
+                data = URLEncoder.encode("robotBatteryLife", "UTF-8")
+                        + "=" + roboBat;
 
-                    data += "&" + URLEncoder.encode("GPSy", "UTF-8")
-                            + "=" + URLEncoder.encode(gpsY, "UTF-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
+                data += "&" + URLEncoder.encode("phoneBatteryLife", "UTF-8")
+                        + "=" + phoneBat;
+
+                data += "&" + URLEncoder.encode("GPSx", "UTF-8")
+                        + "=" + gpsX;
+
+                data += "&" + URLEncoder.encode("GPSy", "UTF-8")
+                        + "=" + gpsY;
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            String text = "";
+            BufferedReader reader = null;
+
+            // Send data
+            try {
+
+                // Defined URL  where to send data
+                url = new URL(urlString);
+                // Send POST data request
+                conn = url.openConnection();
+                conn.setDoOutput(true);
+                conn.setDoInput(true);
+                OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+                wr.write(data);
+                wr.flush();
+                // Get the server response
+                reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+                //Log.i("web test", "prep read");
+                // Read Server Response
+                while ((line = reader.readLine()) != null) {
+                   // Log.i("web test", "read not null");
+                    // Append server response in string
+                    sb.append(line + "\n");
+                    //Log.i("web crap debug", line);
                 }
-                String text = "";
-                BufferedReader reader = null;
+                try {
+                    JSONObject obj = new JSONObject(sb.toString());
+                    // pass on returned commands
+                    text = "" + obj.toString();
+                    ClientComms.commands[0] = obj.getInt("emergency");
+                    ClientComms.commands[1] = obj.getInt("warning");
+                    ClientComms.commands[2] = obj.getInt("leftMotor");
+                    ClientComms.commands[3] = obj.getInt("rightMotor");
+                    ClientComms.commands[4] = obj.getInt("fire");
+                    ClientComms.commands[5] = obj.getInt("pan");
+                    ClientComms.commands[6] = obj.getInt("tilt");
+                }catch (Exception e){
+                    text=sb.toString();
+                }
 
-                // Send data
+
+
+
+                //text = sb.toString();
+
+
+            } catch (Exception ex) {
+                Log.i("web crap", ex.toString());
+            } finally {
                 try {
 
-                    // Defined URL  where to send data
-                     url = new URL(urlString);
-                    // Send POST data request
-                    conn = url.openConnection();
-                    conn.setDoOutput(true);
-                    conn.setDoInput(true);
-                    OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-                    wr.write(data);
-                    wr.flush();
-                    // Get the server response
-                    reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-
-                    StringBuilder sb = new StringBuilder();
-                    String line = null;
-                    //Log.i("web test", "prep read");
-                    // Read Server Response
-                    while ((line = reader.readLine()) != null) {
-                        Log.i("web test", "read not null");
-                        // Append server response in string
-                        sb.append(line + "\n");
-                    }
-
-                    JSONObject obj = new JSONObject(sb.toString());
-                    text="" + obj.getInt("emergency") + "," + obj.getInt("warning") + "," + obj.getInt("fire") + "," + obj.getInt("leftMotor") + "," + obj.getInt("rightMotor");
-
-
-                    //text = sb.toString();
-
-
+                    reader.close();
                 } catch (Exception ex) {
                     Log.i("web crap", ex.toString());
                 }
-
-                 finally {
-                    try {
-
-                        reader.close();
-                    } catch (Exception ex) {
-                        Log.i("web crap", ex.toString());
-                    }
-                }
+            }
 
 
-                // Show response on activity
-                //content.setText( text  );
-
-                Log.i("web", text);
-            }});
-
+            // Show response on activity
+            //content.setText( text  );
+            Log.i("web", text);
+        }});
         backgroundSend.start();
 
-    }}
+        return commands;
+    }
+
+    public void prepNextMessage( ) {
+
+        // Create Inner Thread Class
+        Thread backgroundDelay = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(250);
+                    SerialPassingService.sendToServer();
+                }catch(Exception e){
+                    Log.i("Post Delay","couldn't sleep or post?");
+                }
+            }
+        });
+        backgroundDelay.start();
+    }
+
+}
 
 /* example if i need to update UI
 

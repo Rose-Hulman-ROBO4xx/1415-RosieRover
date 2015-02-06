@@ -49,10 +49,10 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Created by naylorbl on 10/26/2014.
  */
 public final class SerialPassingService extends Service {
-    static String urlString = "http://www.rosierover.com/coms/";
-    static BluetoothAdapter mBluetoothAdapter;
-    static BluetoothManager bluetoothManager;
-    static boolean mScanning;
+//    static String urlString = "http://www.rosierover.com/coms/";
+//    static BluetoothAdapter mBluetoothAdapter;
+//    static BluetoothManager bluetoothManager;
+//    static boolean mScanning;
     static MainActivity mainAct;
     public static SerialPassingService theService;
     public static ArrayList<BluetoothDevice> devices = new ArrayList<BluetoothDevice>();
@@ -68,44 +68,45 @@ public final class SerialPassingService extends Service {
     public static final String CommandUUID = "0000dfb2-0000-1000-8000-00805f9b34fb";
     public static final String ModelNumberStringUUID = "00002a24-0000-1000-8000-00805f9b34fb";
 
-    private static final int REQUEST_ENABLE_BT = 1;
-    // Stops scanning after 10 seconds.
-    private static final long SCAN_PERIOD = 10000;
+//    private static final int REQUEST_ENABLE_BT = 1;
+//    // Stops scanning after 10 seconds.
+//    private static final long SCAN_PERIOD = 10000;
     static BleWrapper mBleWrapper;
     private static BluetoothGattCharacteristic mModelNumberCharacteristic;
     private static BluetoothGattCharacteristic mSerialPortCharacteristic;
     private static BluetoothGattCharacteristic mCommandCharacteristic;
     private static ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics = new ArrayList<ArrayList<BluetoothGattCharacteristic>>();
 
-    //String SENDER_ID = "813526336477";  //sender ID for old GCM test website
-    String SENDER_ID = "471883007186"; //sender ID for rosierover.appspot.com
-
-    public static final String EXTRA_MESSAGE = "message";
-    public static final String PROPERTY_REG_ID = "registration_id";
-    private static final String PROPERTY_APP_VERSION = "appVersion";
-    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-
-    static final String TAG = "GCM Demo";
-
-    private final static int SERVER_PORT = 8006;
-    public final static int RECEIVING_TIMEOUT_SERVER = 3000;
-    static DatagramSocket socket;
-    DatagramPacket packetOut;
-    DatagramPacket packetIn;
-    byte[] DataIn;
-    byte[] DataOut;
-
-    TextView mDisplay;
-    GoogleCloudMessaging gcm;
-    AtomicInteger msgId = new AtomicInteger();
+//    //String SENDER_ID = "813526336477";  //sender ID for old GCM test website
+//    String SENDER_ID = "471883007186"; //sender ID for rosierover.appspot.com
+//
+//    public static final String EXTRA_MESSAGE = "message";
+//    public static final String PROPERTY_REG_ID = "registration_id";
+//    private static final String PROPERTY_APP_VERSION = "appVersion";
+//    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+//
+//    static final String TAG = "GCM Demo";
+//
+//    private final static int SERVER_PORT = 8006;
+//    public final static int RECEIVING_TIMEOUT_SERVER = 3000;
+//    static DatagramSocket socket;
+//    DatagramPacket packetOut;
+//    DatagramPacket packetIn;
+//    byte[] DataIn;
+//    byte[] DataOut;
+//
+//    TextView mDisplay;
+//    GoogleCloudMessaging gcm;
+//    AtomicInteger msgId = new AtomicInteger();
     Context context;
-    String regid;
-    static String IP_ADR = "64.233.183.141";
+//    String regid;
+//    static String IP_ADR = "64.233.183.141";
     static ClientComms comms;
 
     public static GPSTracker gps;
-    public static String[] msgToSend = new String[4];
-
+    //public static String[] msgToSend = new String[4];
+    public static double[] msgToSend = new double[4];
+    public static boolean openServerComms=false;
 
 
 
@@ -130,26 +131,35 @@ public final class SerialPassingService extends Service {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        msgToSend[0]="test1";
-        msgToSend[1]="test2";
-        msgToSend[2]="test3";
-        msgToSend[3]="test4";
-        comms.sendMsg(msgToSend);
+//        msgToSend[0]="test1";
+//        msgToSend[1]="test2";
+//        msgToSend[2]="test3";
+//        msgToSend[3]="test4";
+//        comms.sendMsg(msgToSend);
         //comms.setReceiver();
     }
 
 
 
-    static public void sendToServer(String messageToSend) {
-        try {
-            String messageStr = messageToSend;
-            msgToSend[0]="test1";
-            msgToSend[1]="test2";
-            msgToSend[2]="test3";
-            msgToSend[3]="test4";
-            comms.sendMsg(msgToSend);
-        } catch (Exception e) {
-            Log.d("UDP",e.toString());
+    static public void sendToServer() {
+        if(openServerComms) {
+            try {
+                gps.getLocation();
+                msgToSend[0] = .97;
+                msgToSend[1] = .82;
+                msgToSend[2] = gps.getLongitude();
+                msgToSend[3] = gps.getLatitude();
+//            msgToSend[0]="1";
+//            msgToSend[1]="2";
+//            msgToSend[2]="3";//gps.getLongitude();
+//            msgToSend[3]="4";//gps.getLatitude();
+                serialSend("" + comms.sendMsg(msgToSend));
+                comms.prepNextMessage();
+            } catch (Exception e) {
+                Log.d("Server", e.toString());
+            }
+        }else{
+            Log.i("Server","Message not sent. OpenServerComms = false");
         }
     }
 
@@ -164,7 +174,7 @@ public final class SerialPassingService extends Service {
 
         ////////////////////////////////////////////////////////////////////////////
         //taken from gcm demo. Starts the process of connecting or registering with gcm server
-        if (checkPlayServices()) {
+       /* if (checkPlayServices()) {
             gcm = GoogleCloudMessaging.getInstance(this);
             regid=getRegistrationId(context);
 
@@ -173,7 +183,7 @@ public final class SerialPassingService extends Service {
             }
         } else {
             Log.i(TAG, "No valid Google Play Services APK found.");
-        }
+        }*/
         ///////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -186,17 +196,17 @@ public final class SerialPassingService extends Service {
             @Override
             public void uiDeviceFound(final BluetoothDevice device, final int rssi, final byte[] record){
                 String msg = "uiDeviceFound: "+device.getName()+", " +rssi;//+", "+rssi.toString();
-                Log.d("DEBUG", "uiDeviceFound: " + msg); //lists found things in logcat
+                Log.d("BT", "uiDeviceFound: " + msg); //lists found things in logcat
 
                 //if find Bluno, connect, stop searching for more devices
                 if(device.getName().equals("Bluno")==true){
                    // bool status;
                     if(mBleWrapper.connect(device.getAddress().toString())){
-                        Log.d("DEBUG", "CONNECTION SUCCESSFUL");
+                        Log.d("BT", "CONNECTION SUCCESSFUL");
                         mBleWrapper.stopScanning();
 
                     }else{
-                        Log.d("DEBUG", "CONNECTION FAILED");
+                        Log.d("BT", "CONNECTION FAILED");
                     }
 
                 }
@@ -262,9 +272,9 @@ public final class SerialPassingService extends Service {
         mainAct=act;
     }
 
-    /*
+  /*  *//*
     Taken from GCM demo, establishes GCM connection.
-    */
+    *//*
     private boolean checkPlayServices() {
         int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
         if (resultCode != ConnectionResult.SUCCESS) {
@@ -281,13 +291,13 @@ public final class SerialPassingService extends Service {
         return true;
     }
 
-    /**
+    *//**
      * Stores the registration ID and the app versionCode in the application's
      * {@code SharedPreferences}.
      *
      * @param context application's context.
      * @param regId registration ID
-     */
+     *//*
     private void storeRegistrationId(Context context, String regId) {
         final SharedPreferences prefs = getGcmPreferences(context);
         int appVersion = getAppVersion(context);
@@ -298,14 +308,14 @@ public final class SerialPassingService extends Service {
         editor.commit();
     }
 
-    /**
+    *//**
      * Gets the current registration ID for application on GCM service, if there is one.
      * <p>
      * If result is empty, the app needs to register.
      *
      * @return registration ID, or empty string if there is no existing
      *         registration ID.
-     */
+     *//*
     private String getRegistrationId(Context context) {
         final SharedPreferences prefs = getGcmPreferences(context);
         String registrationId = prefs.getString(PROPERTY_REG_ID, "");
@@ -326,12 +336,12 @@ public final class SerialPassingService extends Service {
         return registrationId;
     }
 
-    /**
+    *//**
      * Registers the application with GCM servers asynchronously.
      * <p>
      * Stores the registration ID and the app versionCode in the application's
      * shared preferences.
-     */
+     *//*
     private void registerInBackground() {
         new AsyncTask<Void, Void, String>() {
             @Override
@@ -370,9 +380,9 @@ public final class SerialPassingService extends Service {
         }.execute(null, null, null);
     }
 
-    /**
+    *//**
      * @return Application's version code from the {@code PackageManager}.
-     */
+     *//*
     private static int getAppVersion(Context context) {
         try {
             PackageInfo packageInfo = context.getPackageManager()
@@ -385,23 +395,23 @@ public final class SerialPassingService extends Service {
     }
 
 
-    /**
+    *//**
      * @return Application's {@code SharedPreferences}.
-     */
+     *//*
     private SharedPreferences getGcmPreferences(Context context) {
         // This sample app persists the registration ID in shared preferences, but
         // how you store the regID in your app is up to you.
         return getSharedPreferences(MainActivity.class.getSimpleName(),
                 Context.MODE_PRIVATE);
     }
-    /**
+    *//**
      * Sends the registration ID to your server over HTTP, so it can use GCM/HTTP or CCS to send
      * messages to your app. Not needed for this demo since the device sends upstream messages
      * to a server that echoes back the message using the 'from' address in the message.
-     */
+     *//*
     private void sendRegistrationIdToBackend() {
         // Your implementation here.
-    }
+    }*/
 
     public static void onResume(){
 
@@ -421,7 +431,7 @@ public final class SerialPassingService extends Service {
         try {
             mBleWrapper.writeDataToCharacteristic(mSerialPortCharacteristic, command.getBytes());
         }catch(NullPointerException e){
-
+            Log.d("SerialSend", "Failed to send command");
         };
         //mBleWrapper.writeDataToCharacteristic(mCommandCharacteristic,command.getBytes());
         //mBleWrapper.writeDataToCharacteristic(mModelNumberCharacteristic,command.getBytes());
