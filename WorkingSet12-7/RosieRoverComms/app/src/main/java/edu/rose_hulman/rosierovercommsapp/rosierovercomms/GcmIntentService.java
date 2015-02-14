@@ -101,7 +101,7 @@ public class GcmIntentService extends IntentService {
 
 
 
-                SerialPassingService.serialSend(q);
+                //SerialPassingService.serialSend(q);
 
                 // logcat message that it received info
                 Log.i(TAG, "Received: " + extras.toString());

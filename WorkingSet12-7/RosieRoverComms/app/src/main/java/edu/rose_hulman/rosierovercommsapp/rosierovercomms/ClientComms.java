@@ -23,12 +23,14 @@ public class ClientComms {
     public static Thread backgroundReceiver;
     BufferedReader reader = null;
     String text;
-    public static int[] commands = new int[5];
+    public static int[]  commands = new int[9];
+    public static String stringCom;
 
     URL url;// = new URL("http://gcm-attempt-01.appspot.com/");
     URLConnection conn;// = url.openConnection();
-    public String urlString="http://rosierover.com/coms";
-    //public String urlString="http://gcm-attempt-01.appspot.com/";
+    public String urlString="http://rosierover.com/coms"; //actual website
+    //public String urlString="http://quotasaredumb.appspot.com/coms"; //website for when we go over quota
+    //public String urlString="http://gcm-attempt-01.appspot.com/"; //testing
 
     public void setup() throws IOException {
         url = new URL(urlString);
@@ -86,7 +88,7 @@ public class ClientComms {
     /*
     establish connection to server and send message
      */
-    public int[] sendMsg( final double msgToSend[]) {
+    public String sendMsg( final double msgToSend[]) {
 
         //Toast.makeText(SerialPassingService.theService, msg, Toast.LENGTH_SHORT).show();
 
@@ -168,13 +170,20 @@ public class ClientComms {
                     JSONObject obj = new JSONObject(sb.toString());
                     // pass on returned commands
                     text = "" + obj.toString();
-                    ClientComms.commands[0] = obj.getInt("emergency");
-                    ClientComms.commands[1] = obj.getInt("warning");
-                    ClientComms.commands[2] = obj.getInt("leftMotor");
-                    ClientComms.commands[3] = obj.getInt("rightMotor");
-                    ClientComms.commands[4] = obj.getInt("fire");
-                    ClientComms.commands[5] = obj.getInt("pan");
-                    ClientComms.commands[6] = obj.getInt("tilt");
+
+                    ClientComms.commands[0] = -11111;
+                    ClientComms.commands[1] = obj.getInt("emergency");
+                    ClientComms.commands[2] = obj.getInt("warning");
+                    ClientComms.commands[3] = obj.getInt("leftMotor");
+                    ClientComms.commands[4] = obj.getInt("rightMotor");
+                    ClientComms.commands[5] = obj.getInt("fire");
+                    ClientComms.commands[6] = obj.getInt("pan");
+                    ClientComms.commands[7] = obj.getInt("tilt");
+                    ClientComms.commands[8] = obj.getInt("ignoreus");
+
+                    ClientComms.stringCom= "" + ClientComms.commands[0] +"," + ClientComms.commands[1] +"," + ClientComms.commands[2] +"," + ClientComms.commands[3] +"," + ClientComms.commands[4] +"," + ClientComms.commands[5] +"," + ClientComms.commands[6] +"," + ClientComms.commands[7] + "," + ClientComms.commands[8] + ",";
+
+
                 }catch (Exception e){
                     text=sb.toString();
                 }
@@ -199,11 +208,11 @@ public class ClientComms {
 
             // Show response on activity
             //content.setText( text  );
-            Log.i("web", text);
+            Log.i("web", ClientComms.stringCom);
         }});
         backgroundSend.start();
 
-        return commands;
+        return stringCom;
     }
 
     public void prepNextMessage( ) {
@@ -213,7 +222,7 @@ public class ClientComms {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(250);
+                    Thread.sleep(200);
                     SerialPassingService.sendToServer();
                 }catch(Exception e){
                     Log.i("Post Delay","couldn't sleep or post?");

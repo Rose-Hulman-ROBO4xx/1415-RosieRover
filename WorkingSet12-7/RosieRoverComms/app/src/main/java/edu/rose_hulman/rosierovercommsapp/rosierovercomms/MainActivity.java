@@ -99,6 +99,8 @@ public class MainActivity extends Activity {
                 SerialPassingService.openServerComms=false;
                 SerialPassingService.mBleWrapper.stopScanning();
                 SerialPassingService.theService.stopSelf();
+                roverConnectivity.setImageResource(R.drawable.xmark_image);
+                serverConnectivity.setImageResource(R.drawable.xmark_image);
 
             }
         });

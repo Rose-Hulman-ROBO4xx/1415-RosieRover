@@ -153,7 +153,7 @@ public final class SerialPassingService extends Service {
 //            msgToSend[1]="2";
 //            msgToSend[2]="3";//gps.getLongitude();
 //            msgToSend[3]="4";//gps.getLatitude();
-                serialSend("" + comms.sendMsg(msgToSend));
+                serialSend( comms.sendMsg(msgToSend));
                 comms.prepNextMessage();
             } catch (Exception e) {
                 Log.d("Server", e.toString());
@@ -199,7 +199,7 @@ public final class SerialPassingService extends Service {
                 Log.d("BT", "uiDeviceFound: " + msg); //lists found things in logcat
 
                 //if find Bluno, connect, stop searching for more devices
-                if(device.getName().equals("Bluno")==true){
+                if(device.getName().contains("Bluno")==true){
                    // bool status;
                     if(mBleWrapper.connect(device.getAddress().toString())){
                         Log.d("BT", "CONNECTION SUCCESSFUL");
@@ -254,7 +254,10 @@ public final class SerialPassingService extends Service {
         //I commented this next line our because I don't think we need this recursive call. undo if it breaks
         mBleWrapper.initialize();
     }
-
+    public void disconnect(){
+        mBleWrapper.diconnect();
+        mGattCharacteristics.clear();
+    }
 
     /*
     Some sort of service crap. i have no idea what it does, but it seems to be important.
@@ -430,6 +433,8 @@ public final class SerialPassingService extends Service {
 		//mBluetoothLeService.writeCharacteristic(mSCharacteristic);
         try {
             mBleWrapper.writeDataToCharacteristic(mSerialPortCharacteristic, command.getBytes());
+            //mBleWrapper.writeDataToCharacteristic(mSerialPortCharacteristic, command.toString().getBytes());
+            Log.d("SerialSend", command.toString());
         }catch(NullPointerException e){
             Log.d("SerialSend", "Failed to send command");
         };
