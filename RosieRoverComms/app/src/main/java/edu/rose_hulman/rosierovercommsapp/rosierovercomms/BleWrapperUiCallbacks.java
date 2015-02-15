@@ -1,11 +1,11 @@
 package edu.rose_hulman.rosierovercommsapp.rosierovercomms;
 
-import java.util.List;
-
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
+
+import java.util.List;
 
 /*
 This class was taken from the example in Dr. Fisher's book (Getting Started

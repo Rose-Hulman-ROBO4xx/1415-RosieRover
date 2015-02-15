@@ -1,12 +1,5 @@
 package edu.rose_hulman.rosierovercommsapp.rosierovercomms;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
-
-import android.app.Activity;
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -21,6 +14,12 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.util.Log;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
 
 /*
 This class was taken from the example in Dr. Fisher's book (Getting Started

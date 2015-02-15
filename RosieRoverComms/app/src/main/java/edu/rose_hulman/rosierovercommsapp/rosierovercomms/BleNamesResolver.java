@@ -1,9 +1,8 @@
 package edu.rose_hulman.rosierovercommsapp.rosierovercomms;
 
-import java.util.HashMap;
-import java.util.UUID;
-
 import android.util.SparseArray;
+
+import java.util.HashMap;
 
 /*
 This class was taken from the example in Dr. Fisher's book (Getting Started
