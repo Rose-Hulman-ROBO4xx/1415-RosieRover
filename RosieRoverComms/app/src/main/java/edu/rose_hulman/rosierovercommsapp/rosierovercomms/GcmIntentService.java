@@ -94,18 +94,18 @@ public class GcmIntentService extends IntentService {
                  SerialPassingService.serialSend, which forwards it to the Bluno.
                  */
                 String s=extras.toString();
-                String splits[]=null;
-                s=s.split("COMMAND:100,")[1]; //temp thing to get rid of 1st part
+               // String splits[]=null;
+                s=s.split("STATUS:")[1]; //temp thing to get rid of 1st part
                 s=s.split(";")[0];
-                //remove these next two lines when the website is updated to no longer include the "drive" command or duration
-                splits = s.split(",");
-                s=splits[0] + "," + splits[1] + ",";
+                String q="-1,"+s+":";
 
-                SerialPassingService.serialSend(s);
+
+
+                //SerialPassingService.serialSend(q);
 
                 // logcat message that it received info
                 Log.i(TAG, "Received: " + extras.toString());
-                Log.i(TAG, "Parsed Command: " + s);
+                Log.i(TAG, "Parsed Command: " + q);
                 ////////////////////////////////////////////////////////////////////////////////////
             }
         }
