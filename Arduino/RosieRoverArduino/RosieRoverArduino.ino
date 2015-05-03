@@ -25,7 +25,7 @@ int safeDist=48;
 int controllerState[23];
 bool controllerSignal=false;
 bool controllerOverride=false;
-bool blockVideo=false;
+int blockVideo = 0;
 
 
 int timeoutTime=1000; //allows 1000ms (2s) before determined connection is lost
@@ -154,9 +154,9 @@ void loop() {
 
 //turn video on and off
    if(controllerValues[5]==1){
-     blockVideo=false;
+     blockVideo=0;
    }else if(controllerValues[7]==1){
-     blockVideo=true;
+     blockVideo=1;
    }
   
   
@@ -256,7 +256,7 @@ void loop() {
 //        Serial.println(controllerMotorRight);
         leftWheel.write(controllerMotorLeft);
         rightWheel.write(controllerMotorRight);
-      }else if(blockVideo==false){
+      }else if(blockVideo==0){
         leftWheel.write(motorSpeedL);
         rightWheel.write(motorSpeedR);
 //        Serial.print(motorSpeedL);
@@ -329,6 +329,8 @@ void serialEvent(){
     pan=Serial.parseInt();//pan turret
     tilt=Serial.parseInt();//tilt turret
     ignore_us=Serial.parseInt(); //ignore warning from ultrasonic
+    
+    Serial.write((int)(1-blockVideo));
     
 }
 

@@ -1,8 +1,6 @@
 package edu.rose_hulman.rosierovercommsapp.rosierovercomms;
 
 import android.util.Log;
-import android.widget.Toast;
-
 
 import org.json.JSONObject;
 
@@ -11,7 +9,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
@@ -108,6 +105,7 @@ public class ClientComms {
             double phoneBat = msgToSend[1];
             double gpsX = msgToSend[2];
             double gpsY = msgToSend[3];
+            int displayVideo=(int)msgToSend[4];
             String data = null;
             try {
 
@@ -134,6 +132,9 @@ public class ClientComms {
 
                 data += "&" + URLEncoder.encode("GPSy", "UTF-8")
                         + "=" + gpsY;
+
+                data += "&" + URLEncoder.encode("displayVideo", "UTF-8")
+                        + "=" + displayVideo;
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
@@ -180,6 +181,7 @@ public class ClientComms {
                     ClientComms.commands[6] = obj.getInt("pan");
                     ClientComms.commands[7] = obj.getInt("tilt");
                     ClientComms.commands[8] = obj.getInt("ignoreus");
+
 
                     ClientComms.stringCom= "" + ClientComms.commands[0] +"," + ClientComms.commands[1] +"," + ClientComms.commands[2] +"," + ClientComms.commands[3] +"," + ClientComms.commands[4] +"," + ClientComms.commands[5] +"," + ClientComms.commands[6] +"," + ClientComms.commands[7] + "," + ClientComms.commands[8] + ",";
 

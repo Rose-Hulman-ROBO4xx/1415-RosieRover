@@ -2,48 +2,19 @@ package edu.rose_hulman.rosierovercommsapp.rosierovercomms;
 
 //import android.content.ServiceConnection;
 import android.app.Service;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
-import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by naylorbl on 10/26/2014.
@@ -105,8 +76,9 @@ public final class SerialPassingService extends Service {
 
     public static GPSTracker gps;
     //public static String[] msgToSend = new String[4];
-    public static double[] msgToSend = new double[4];
+    public static double[] msgToSend = new double[5];
     public static boolean openServerComms=false;
+    public static int displayVideo=1;
 
 
 
@@ -149,6 +121,7 @@ public final class SerialPassingService extends Service {
                 msgToSend[1] = .82;
                 msgToSend[2] = gps.getLongitude();
                 msgToSend[3] = gps.getLatitude();
+                msgToSend[4] =displayVideo;
 //            msgToSend[0]="1";
 //            msgToSend[1]="2";
 //            msgToSend[2]="3";//gps.getLongitude();
@@ -237,9 +210,9 @@ public final class SerialPassingService extends Service {
                                                 BluetoothGattCharacteristic ch, String strValue,
                                                 int intValue ,byte[] rawValue, String timestamp){
                 super.uiNewValueForCharacteristic(gatt,device,service,ch,strValue,intValue,rawValue,timestamp);
-                Log.d("LOGTAG", "uiNewValueForCharacteristic");
+               // Log.d("LOGTAG", "uiNewValueForCharacteristic");
                 for(byte b:rawValue){
-                    Log.d("LOGTAG","Val: "+b);
+                 //   Log.d("LOGTAG","Val: "+b);
                 }
             }
 
@@ -438,6 +411,14 @@ public final class SerialPassingService extends Service {
         }catch(NullPointerException e){
             Log.d("SerialSend", "Failed to send command");
         };
+        mBleWrapper.requestCharacteristicValue(mSerialPortCharacteristic);
+        mBleWrapper.getCharacteristicValue(mSerialPortCharacteristic);
+        //byte[] data=(mSerialPortCharacteristic.getValue());
+        mBleWrapper.mBluetoothGatt.readCharacteristic(mSerialPortCharacteristic);
+
+        displayVideo = mSerialPortCharacteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8,1)-48;
+        //displayVideo = (int)data[0];
+        Log.d("SerialRead", "displayVideo = " + displayVideo);
         //mBleWrapper.writeDataToCharacteristic(mCommandCharacteristic,command.getBytes());
         //mBleWrapper.writeDataToCharacteristic(mModelNumberCharacteristic,command.getBytes());
     }
