@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Rosie Rover</title>
+
+<link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">
+
+<link rel="stylesheet"
+	href="static/bootstrap/css/bootstrap-theme.min.css">
+
+<link rel="stylesheet" type="tex/css"
+	href="static/styleness/roverControlPage.css" />
+
+</head>
+<body>
+
+	<iframe src="https://embed.bambuser.com/channel/RosieRover"
+		frameborder="0" alt="Rosie Rover" id="RoverImage">Your
+		browser does not support iframes.</iframe>
+
+	<div id="rightSideThings">
+		<h1 id="title">Control the Rover!</h1>
+
+		<div class="forClearing"></div>
+
+		<img src="static/pictures/campusOverheadView.jpg"
+			alt="Rose-Hulman Campus Map" id="CampusMap"> <span
+			id="locationStar" style="color: red" class="glyphicon glyphicon-star"></span>
+
+		<div class="forClearing"></div>
+
+		<div class="roverControlPanel">
+			<h3 id="roverControlPanelHeading">Rover Control</h3>
+			<table id="roverControlPanelTable">
+				<tbody>
+					<tr>
+						<td></td>
+						<td>
+							<button class="glyphicon glyphicon-arrow-up" id="upRover"></button>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<button class="glyphicon glyphicon-arrow-left" id="leftRover"></button>
+						</td>
+						<td></td>
+						<td>
+							<button class="glyphicon glyphicon-arrow-right" id="rightRover"></button>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<button class="glyphicon glyphicon-arrow-down" id="downRover"></button>
+						<td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="turretControlPanel">
+			<h3 id="turretControlPanelHeading">Turret Control</h3>
+			<table id="turretControlPanelTable">
+				<tbody>
+					<tr>
+						<td></td>
+						<td>
+							<button class="glyphicon glyphicon-arrow-up" id="upTurret"></button>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<button class="glyphicon glyphicon-arrow-left" id="leftTurret"></button>
+						</td>
+						<td></td>
+						<td>
+							<button class="glyphicon glyphicon-arrow-right" id="rightTurret"></button>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<button class="glyphicon glyphicon-arrow-down" id="downTurret"></button>
+						<td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="forClearing"></div>
+
+		<div id="emergencyStopButtonDiv">
+			<button id="emergencyStopButton" style="background-color: red"
+				class="Moving">STOP!</button>
+		</div>
+		
+		<div id="warningLightsAndBuzzerButtonDiv">
+			<button id="warningLightsAndBuzzerButton"
+				style="background-color: yellow">Warning</button>
+		</div>
+		
+		<div id="fireDartButtonDiv">
+			<button id="fireDartButton" style="background-color: yellow">Fire</button>
+		</div>
+
+		<div class="forClearing"></div>
+
+		<div id="createGameButtonDiv">
+			<button id="createGameButton">Create a New Game</button>
+		</div>
+		
+		<div id="disconnectButtonDiv">
+			<button id="disconnectButton">Disconnect and Return</button>
+		</div>
+	
+		<div class="forClearing"></div>
+
+		<div id="phoneBatteryVoltageDiv">
+		<p>Phone Battery Voltage</p>
+		<div
+			class="col-md-10 progress-bar progress-bar-danger batteryVoltages"
+			id="phoneBatteryVoltage" style="width: 100%"></div>
+		</div>
+
+		<div id="robotBatteryVoltageDiv">
+		<p>Robot Battery Voltage</p>
+		<div
+			class="col-md-10 progress-bar progress-bar-danger batteryVoltages"
+			id="robotBatteryVoltage" style="width: 100%"></div>
+		</div>
+
+		<div class="forClearing"></div>
+
+		<p>Speed</p>
+		<input type="range" id="speedSlider" value="50" min="0" max="100">
+
+		<p>Attempting Stairs - Ignore the Ultra Sonic Sensor</p>
+		<input type="checkbox" id="stairCheckBox">
+
+		<div class="forClearing"></div>
+
+		<div class="SelectNewGame">
+			<p>Feel free to choose a game to play. Games have places to visit
+				around campus.</p>
+			<select class="SelectNewGame" name="games"> {% for game in
+				existingGame_query %}
+				<option value="{{ game.gameName }}">{{ game.gameName }}</option> {%
+				endfor %}
+			</select>
+			<button id="PickedAGame">Play!</button>
+		</div>
+
+		{% for game in existingGame_query %}
+		<table class="{{ game.gameName }} goalTable">
+			<thead>
+				<tr>
+					<th colspan="2">{{ game.gameName }}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Destination</td>
+					<td>Points</td>
+				</tr>
+				{% for goal in game.goals %}
+				<tr>
+					<td>{{ goal.destination }}</td>
+					<td>{{ goal.pointValue }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		{% endfor %}
+
+	</div>
+
+	<p style="color: red" id="authorizationStatusIndicator_notAuthorized"> You are not authorized to control the rover. </p>
+	<p style="color: green" id="authorizationStatusIndicator_authorized"> You are authorized to control the rover. </p>
+
+	<script src="static/jquery-1.11.1.min.js"></script>
+	<script src="static/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/static/js/roverControlPage.js"></script>
+
+</body>
+</html>

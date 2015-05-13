@@ -1,0 +1,6 @@
+Improve the asthetics.
+Make it work on other browsers.
+Add a way to play the games.
+Allow the admissions officer to block the video.
+Display which users are authorized for which time slots.
+Make sure timezones don't mess up the authorization time.

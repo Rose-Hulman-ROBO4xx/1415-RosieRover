@@ -1,0 +1,189 @@
+*{
+	font-family:"San Serif Font Futura";
+}
+
+#RoverImage{
+	width:70%;
+	height:99vh;
+	padding-top:20px;
+	padding-bottom:20px;
+	padding-left:20px;
+	padding-right:0px;
+	margin:0px;
+}
+
+#rightSideThings{
+	float:right;
+	width:29%;
+	margin-top:20px;
+}
+
+#title{
+	padding:0px;
+	margin:0px;
+	width:100%;
+	text-align:center;
+}
+
+#CampusMap{
+	width:100%;
+	padding-top:20px;
+	padding-bottom:0px;
+	padding-right:20px;
+	padding-left:20px;
+	margin:0px;
+}
+
+#locationStar{
+	display:in-line;
+	position:relative;
+	top:200px;
+}
+
+.roverControlPanel{
+	padding:0px;
+	margin:0px;
+	width:50%;
+	float:left;
+	text-align:center;
+}
+
+#roverControlPanelHeading{
+	padding:0px;
+	margin:0px;
+}
+
+.turretControlPanel{
+	padding:0px;
+	margin:0px;
+	width:50%;
+	float:right;
+	text-align:center;
+}
+
+#roverControlPanelTable{
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#turretControlPanelHeading{
+	padding:0px;
+	margin:0px;
+}
+
+#turretControlPanelTable{
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#emergencyStopButtonDiv{
+	margin-top:20px;
+	float:left;
+	width:33.33333%;
+	text-align:center;
+}
+
+#emergencyStopButton{
+	padding-top:10px;
+	padding-bottom:10px;
+	padding-right:20px;
+	padding-left:20px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#warningLightsAndBuzzerButtonDiv{
+	margin-top:20px;
+	float:left;
+	width:33.33333%;
+	text-align:center;
+}
+
+#warningLightsAndBuzzerButton{
+	padding-top:10px;
+	padding-bottom:10px;
+	padding-right:20px;
+	padding-left:20px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#fireDartButtonDiv{
+	margin-top:20px;
+	float:left;
+	width:33.33333%;
+	text-align:center;
+}
+
+#fireDartButton{
+	padding-top:10px;
+	padding-bottom:10px;
+	padding-right:20px;
+	padding-left:20px;
+}
+
+#createGameButtonDiv{
+	margin-top:20px;
+	float:left;
+	width:50%;
+	text-align:center;
+}
+
+#createGameButton{
+	padding-top:10px;
+	padding-bottom:10px;
+	padding-right:20px;
+	padding-left:20px;
+}
+
+#disconnectButtonDiv{
+	margin-top:20px;
+	float:left;
+	width:50%;
+	text-align:center;
+}
+
+#disconnectButton{
+	padding-top:10px;
+	padding-bottom:10px;
+	padding-right:20px;
+	padding-left:20px;
+}
+
+#phoneBatteryVoltageDiv{
+	margin-top:20px;
+	margin-right:20px;
+	float:left;
+	width:50%;
+}
+
+#robotBatteryVoltageDiv{
+	margin-top:20px;
+	margin-right:20px;
+	float:left;
+	width:50%;
+}
+
+.forClearing {
+	clear:both;
+}
+
+
+
+
+
+#SelectNewGame{
+	clear:right;
+	float:right;
+}
+
+
+
+.batteryVoltages{
+	margin-top:5px;
+	margin-bottom:10px;
+	display:block;
+	height:20px;
+	position:relative;
+	top: 6px;
+}

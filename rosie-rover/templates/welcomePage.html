@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Rosie Rover</title>
+
+<!-- Bootstrap -->
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet"
+	href="static/bootstrap/css/bootstrap-theme.min.css">
+
+<link rel="stylesheet" type="tex/css"
+	href="static/styleness/welcomePage.css" />
+</head>
+
+<body>
+	<table>
+		<thead>
+			<tr>
+				<td>
+					<h1>Welcome to the Rosie Rover page!</h1>
+				</td>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr>
+				<td><img src="static/pictures/Rose-Hulman.jpg"
+					alt="Rose-Hulman Image1" id="pic1"></td>
+				<td>
+					<div>
+						<table>
+							<tr>
+								<td>
+									<p>Ever wanted to tour Rose-Hulman but were unable to? Ever
+										wanted to chase geese with a robot? Then contact the
+										Rose-Hulman Admissions Office control a telepresence robot and
+										take a tour!</p>
+								</td>
+							</tr>
+							<tr>
+								<td><a
+									href="http://www.rose-hulman.edu/admissions-financial-aid.aspx">
+										Contact the Rose-Hulman Admissions Office </a></td>
+							</tr>
+							<tr>
+								<td>
+									<button type="button" class="btn btn-default"
+										data-toggle="modal" data-target="#newUserModal" id="newUserButton">New
+										User</button>
+									<button type="button" class="btn btn-default"
+										data-toggle="modal" data-target="#loginModal" id="logInButton">Log
+										In</button>
+									<button type="button" class="btn btn-default" id="logOutButton">Log Out</button>
+									<button type="button" class="btn btn-default" id="proceedButton">Control Rover</button>
+									<h3 id="user"></h3>
+									<h5 id="warningLabel"></h5>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td><img src="static/pictures/Rose-Hulman2.jpg"
+					alt="Rose-Hulman Image2" id="pic2"></td>
+				<td><img src="static/pictures/Rose-Hulman3.jpg"
+					alt="Rose-Hulman Image3" id="pic3"></td>
+			</tr>
+
+		</tbody>
+	</table>
+
+
+	<!-- newUserModal -->
+	<div class="modal fade" id="newUserModal" tabindex="-1" role="dialog"
+		aria-labelledby="New User" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title">Create a New User</h4>
+				</div>
+					<div class="modal-body">
+						<h4 style="color: red">Do NOT use a password or user name
+							that you for anything else! This site is NOT secure.</h4>
+						<p>User Name</p>
+						<input type="text" name="username" class="form-control"
+							id="createNewUserUsername">
+						<p>Password</p>
+						<input type="text" name="password" class="form-control"
+							id="createNewUserPassword">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+						<button type="submit" class="btn btn-success" id="submitCreateNewUserButton" data-dismiss="modal">Create</button>
+					</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- loginModal -->
+	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog"
+		aria-labelledby="Log In" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title">Log in</h4>
+				</div>
+					<div class="modal-body">
+						<p>User Name</p>
+						<input type="text" name="username" class="form-control"
+							id="logInUsername">
+						<p>Password</p>
+						<input type="text" name="password" class="form-control"
+							id="logInPassword">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+						<button type="submit" class="btn btn-success" id="submitLogInButton" data-dismiss="modal">Log In</button>
+					</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="static/jquery-1.11.1.min.js"></script>
+	<script src="static/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/static/js/welcomePage.js"></script>
+</body>
+</html>
